@@ -15,4 +15,5 @@ public class Category {
     private Long id;
     @Column(length = 255)
     private String name;
+    private int ordering;   //정렬 순서
 }

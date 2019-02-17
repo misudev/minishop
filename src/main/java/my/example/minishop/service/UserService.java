@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface UserService {
     public List<User> getUserAll();
+    public User join(User user);
 }

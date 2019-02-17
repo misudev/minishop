@@ -32,10 +32,14 @@ public class ShopUserDetailsService implements UserDetailsService {
         Set<Role> roles = user.getRoles();
         for(Role role : roles)
             authorities.add(new SimpleGrantedAuthority("ROLE_" + role.getName()));
+
         ShopSecurityUser shopSecurityUser = new ShopSecurityUser(email, user.getPasswd(), authorities);
         shopSecurityUser.setId(user.getId());
         shopSecurityUser.setName(user.getName());
         shopSecurityUser.setNickName(user.getNickName());
+       // Iterator iterator = shopSecurityUser.getAuthorities().iterator();
+       // while(iterator.hasNext())
+       //     System.out.println(iterator.next());
         return shopSecurityUser;
     }
 

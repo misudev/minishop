@@ -39,4 +39,10 @@ public class User {
         createDate = new Date();
         roles = new HashSet<>();
     }
+
+    public void addRole(Role role){
+        if(roles == null)
+            roles = new HashSet<>();
+        roles.add(role);
+    }
 }
