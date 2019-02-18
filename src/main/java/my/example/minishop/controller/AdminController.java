@@ -60,7 +60,8 @@ public class AdminController {
         newItem.setName(name);
         newItem.setPrice(Long.parseLong(price));
         newItem.setStock(stock);
-        newItem.setDescription(description);
+
+        newItem.setDescription(description.replace("\r\n", "<br>"));
 
         if(images != null && images.length > 0) {
             int ordering = 1;

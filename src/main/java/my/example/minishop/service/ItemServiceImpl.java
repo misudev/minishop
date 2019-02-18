@@ -28,7 +28,7 @@ public class ItemServiceImpl implements ItemService{
 
     @Override
     public Item getItemById(Long id) {
-        return itemRepository.getOne(id);
+        return itemRepository.getItem(id);
     }
 
     @Transactional(readOnly = true)

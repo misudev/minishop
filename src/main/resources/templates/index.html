@@ -61,9 +61,9 @@
                   <li><a href="/users/login"><span class="icon icon-person"></span></a></li>
                   <li><a href="#"><span class="icon icon-heart-o"></span></a></li>
                   <li>
-                    <a href="cart.html" class="site-cart">
+                    <a href="/cart" class="site-cart">
                       <span class="icon icon-shopping_cart"></span>
-                      <span class="count">2</span>
+                      <!--<span class="count">2</span>-->
                     </a>
                   </li>
                   <li class="d-inline-block d-md-none ml-md-0"><a href="#" class="site-menu-toggle js-menu-toggle"><span class="icon-menu"></span></a></li>
@@ -157,12 +157,12 @@
                 <div class="block-4 text-center border">
                   <figure class="block-4-image">
                     <!-- 이미지 띄우기 -->
-                    <a href="shop-single.html">
+                    <a th:href="${'/items/' + item.id}">
                       <img th:if="${#arrays.length(item.imageFiles) > 0}" th:src="'/items/images/'+ ${item.imageFiles[0].id}" alt="Image placeholder" class="img-fluid">
                     </a>
                   </figure>
                   <div class="block-4-text p-4">
-                    <h3><a href="shop-single.html" th:text="${item.name}"></a></h3>
+                    <h3><a th:href="${'/items/' + item.id}" th:text="${item.name}"></a></h3>
                     <p class="mb-0" th:text="${item.category.name}">Finding perfect t-shirt</p>
                     <p class="text-primary font-weight-bold" th:text="${item.price}+' 원'"></p>
                   </div>

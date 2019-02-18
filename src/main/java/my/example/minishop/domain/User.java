@@ -27,6 +27,7 @@ public class User {
     @Column(name = "nick_name", length = 20)
     private String nickName;
 
+
     @ManyToMany
     @JoinTable(name = "user_roles",
             joinColumns = {@JoinColumn(name = "user_id",referencedColumnName = "id")},
