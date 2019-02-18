@@ -16,14 +16,16 @@ public class Cart {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+//    @ManyToOne
+//    @JoinColumn(name = "user_id")
     @Column
     private Long userId;
 
-    @OneToMany
-    @JoinColumn(name = "cart_id")
-    private List<OrderDetail> cartDetailList;
+    @Column
+    private int quantity;
 
-    public Cart(){
-        cartDetailList = new ArrayList<>();
-    }
+    @ManyToOne
+    @JoinColumn(name = "item_id")
+    private Item item;
+
 }

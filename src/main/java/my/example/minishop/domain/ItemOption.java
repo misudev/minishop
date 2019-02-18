@@ -6,14 +6,15 @@ import lombok.Setter;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "category")
+@Table(name = "item_option")
 @Setter
 @Getter
-public class Category {
+public class ItemOption {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) // 자동증가.
     private Long id;
-    @Column(length = 255)
+    @Column
     private String name;
-    private int ordering;   //정렬 순서
+    @Column
+    private Long price;
 }

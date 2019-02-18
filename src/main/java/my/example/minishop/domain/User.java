@@ -27,6 +27,7 @@ public class User {
     @Column(name = "nick_name", length = 20)
     private String nickName;
 
+
     @ManyToMany
     @JoinTable(name = "user_roles",
             joinColumns = {@JoinColumn(name = "user_id",referencedColumnName = "id")},
@@ -38,5 +39,11 @@ public class User {
     public User(){
         createDate = new Date();
         roles = new HashSet<>();
+    }
+
+    public void addRole(Role role){
+        if(roles == null)
+            roles = new HashSet<>();
+        roles.add(role);
     }
 }
