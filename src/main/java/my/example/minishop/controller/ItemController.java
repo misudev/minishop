@@ -57,11 +57,18 @@ public class ItemController {
     public String itemDetail(@PathVariable(name = "id") Long id,
                            Model model
     ){
+
         Item item = itemService.getItemById(id);
         model.addAttribute("item", item);
 
         List<Category> categories = categoryService.getCategoryAll();
         model.addAttribute("categories", categories);
+
+        //수정 필요 **
+        Category allCategory = new Category();
+        allCategory.setId(0L);
+        allCategory.setName("shop all");
+        model.addAttribute("selectedCategory", allCategory);
 
         return "shop-single";
     }

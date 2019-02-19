@@ -1,5 +1,6 @@
 package my.example.minishop;
 
+import nz.net.ultraq.thymeleaf.LayoutDialect;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -15,6 +16,7 @@ public class MinishopApplication {
 		final SpringTemplateEngine templateEngine = new SpringTemplateEngine();
 		templateEngine.setTemplateResolver(templateResolver);
 		templateEngine.addDialect(sec); // Enable use of "sec"
+		templateEngine.addDialect(new LayoutDialect());
 		return templateEngine;
 	}
 
