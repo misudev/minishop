@@ -1,5 +1,6 @@
 package my.example.minishop.domain;
 
+import com.sun.corba.se.impl.resolver.ORBDefaultInitRefResolverImpl;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -28,6 +29,10 @@ public class Order {
     @Column
     private String address;
     @Column
+    private String detailAddress;   //상세주소
+    @Column
+    private String extraAddress;    //참고항목
+    @Column
     private String contact;
     @Column
     private String memo;
@@ -44,6 +49,12 @@ public class Order {
     public Order(){
         regDate = new Date();
         orderDetailList = new ArrayList<>();
+    }
+
+    public void addOrderDetail(OrderDetail orderDetail){
+        if(orderDetailList==null)
+            orderDetailList = new ArrayList<>();
+        orderDetailList.add(orderDetail);
     }
 
 }

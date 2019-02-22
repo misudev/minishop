@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>update item</title>
+    <script src="/webjars/jquery/3.3.1-2/jquery.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            //HTML 페이지가 모두 로딩되었을때 수행될 코드를 입력하면 됩니다.
+            var itemId = $('#itemId').val();
+
+            $('#delete').click(function () {
+                var optionId = $("#nowOptions option:selected").val();
+                $.ajax({
+                    url: '/api/admin/'+optionId,
+                    method: 'delete',
+                    success: function (result) {
+                        if(result == "true"){
+                            $('#nowOptions option:selected').remove();}
+                        else {
+                            alert("삭제X");
+                        }
+                    },
+                    error: function (err) {
+                        console.log(err.toString());
+                    }
+                });
+            });
+
+            $('#add').click(function () {
+                var phoneTypeId = $("select[name='phoneTypes'] option:selected").val();
+                console.log(phoneTypeId);
+                var JSONObject = {'phoneTypeId': phoneTypeId , 'itemId' : itemId};
+                var jsonData = JSON.stringify( JSONObject );
+
+                $.ajax({
+                    url: '/api/admin',
+                    method: 'post',
+                    data: jsonData,
+                    async: true,
+                    contentType: "application/json",
+                    success: function (result) {
+                        if(result == "false"){
+                            alert("이미 존재합니다.")
+                        }else{
+                            alert("추가되었습니다.")
+                            $("#nowOptions").append('<option>result</option>');
+
+                        }
+                    },
+                    error: function (err) {
+                        console.log(err.toString());
+                    }
+                });
+            })
+
+
+        });
+    </script>
+</head>
+<body>
+    <div class="card" style="margin-top: 1rem; margin-bottom: 1rem;">
+    </div>
+
+    <input type="hidden" id="itemId" th:value="${item.id}">
+        <div><img th:if="${#arrays.length(item.imageFiles) > 0}" th:src="'/items/images/'+ ${item.imageFiles[0].id}" alt="Image"></div>
+        <div>이름 : <span th:text="${item.name}"></span></div>
+        <div>현재 옵션 : </div>
+        <div>
+            <select class="form-control" id = "nowOptions" name = "nowOPtions">
+                <option th:each="itemOption : ${item.itemOptions}" th:value="${itemOption.id}" th:text="${itemOption.name}"></option>
+            </select>
+            <button th:id="delete" class="btn btn-light">삭제</button>
+        </div>
+        <div>추가 옵션 : </div>
+            <select class="form-control"  id = "phoneTypes" name="phoneTypes">
+                <option th:each="phoneType : ${phoneTypes}" th:value="${phoneType.id}" th:text="${phoneType.name}"></option>
+            </select>
+            <button th:id="add" class="btn btn-light">추가</button>
+
+
+</body>
+</html>

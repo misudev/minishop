@@ -26,8 +26,8 @@ public class CartServiceImpl implements CartService{
 
     @Override
     @Transactional
-    public void addCart(Cart cart, Long itemId) {
-        Cart existCart = cartRepository.getCartByUserAndItem(cart.getUserId(), itemId);
+    public void addCart(Cart cart, Long itemId, String phoneType) {
+        Cart existCart = cartRepository.getCartByUserAndItemAndPhoneType(cart.getUserId(), itemId, phoneType);
 
         if(existCart!=null){
             int quantity = cart.getQuantity() + existCart.getQuantity();
@@ -37,6 +37,7 @@ public class CartServiceImpl implements CartService{
                     = itemRepository.findById(itemId);
 
             cart.setItem(optionalItem.get());
+            cart.setPhoneType(phoneType);
             cartRepository.save(cart);
         }
 
@@ -52,5 +53,12 @@ public class CartServiceImpl implements CartService{
     @Transactional
     public void updateCart(Long cartId, int quantity) {
         cartRepository.updateCart(quantity, cartId);
+    }
+
+
+    @Override
+    @Transactional
+    public Cart getCartById(Long cartId) {
+        return cartRepository.getCartById(cartId);
     }
 }

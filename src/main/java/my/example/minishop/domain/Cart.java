@@ -24,6 +24,12 @@ public class Cart {
     @Column
     private int quantity;
 
+    @Column
+    private Long optionId;
+
+    @Column
+    private String phoneType;
+
     @ManyToOne
     @JoinColumn(name = "item_id")
     private Item item;

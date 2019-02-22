@@ -41,14 +41,6 @@ public class UserController {
         if(!joinForm.getPassword1().equals(joinForm.getPassword2()))
             throw new IllegalArgumentException("암호와 암호확인이 틀려요.");
 
-//        Account account = new Account();
-//        account.setEmail(joinForm.getEmail());
-//        account.setName(joinForm.getName());
-//        account.setNickName(joinForm.getNickName());
-//        PasswordEncoder passwordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
-//        account.setPasswd(passwordEncoder.encode(joinForm.getPassword1()));
-//
-//        Account result = accountService.join(account);
 
         User user = new User();
         user.setEmail(joinForm.getEmail());

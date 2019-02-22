@@ -1,14 +1,16 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layout/main_layout">
-  <th:block layout:fragment="html_head">
+<th:block layout:fragment="html_head">
     <title>Detail</title>
     <script>
         $(document).ready(function(){
             $('#addCart').click(function () {
                 var quantity = $('#quantity').val();
                 var itemId = $('#itemId').val();
+                var phoneType = $("#phoneType option:selected").val();
 
-                var JSONObject = {'itemId': itemId, 'quantity': quantity };
+
+                var JSONObject = {'itemId': itemId, 'quantity': quantity , 'phoneType' : phoneType};
                 var jsonData = JSON.stringify( JSONObject );
 
                 console.log(quantity);
@@ -21,11 +23,11 @@
                     async: true,
                     contentType: "application/json",
                     success: function (result) {
-                       if(result == "false"){
-                           alert("로그인이 필요합니다.")
-                       }else if(result == "true"){
-                           alert("장바구니에 추가되었습니다.")
-                       }
+                        if(result == "false"){
+                            alert("로그인이 필요합니다.")
+                        }else if(result == "true"){
+                            alert("장바구니에 추가되었습니다.")
+                        }
                     },
                     error: function (err) {
                         console.log(err.toString());
@@ -34,73 +36,61 @@
             });
         });
     </script>
-  </th:block>
+</th:block>
 
-  <body>
-  <th:block layout:fragment="content_body">
+<body>
+<th:block layout:fragment="content_body">
     <header th:include="fragments/main/main_headmenu" class="site-navbar" role="banner"></header>
     <div class="site-wrap">
-      <div class="bg-light py-3">
-        <div class="container">
-          <div class="row">
-            <div class="col-md-12 mb-0"><a href="index.html">Home</a> <span class="mx-2 mb-0">/</span> <strong class="text-black" th:text="${item.name}"></strong></div>
-          </div>
-        </div>
-      </div>
-
-      <div class="site-section">
-        <div class="container">
-          <div class="row">
-            <div class="col-md-6">
-              <img th:if="${#arrays.length(item.imageFiles) > 0}" th:src="'/items/images/'+ ${item.imageFiles[0].id}" alt="Image" class="img-fluid">
-            </div>
-            <div class="col-md-6">
-              <h2 class="text-black" th:text="${item.name}"></h2>
-             <!-- <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Pariatur, vitae, explicabo? Incidunt facere, natus soluta dolores iusto! Molestiae expedita veritatis nesciunt doloremque sint asperiores fuga voluptas, distinctio, aperiam, ratione dolore.</p>
-              <p class="mb-4">Ex numquam veritatis debitis minima quo error quam eos dolorum quidem perferendis. Quos repellat dignissimos minus, eveniet nam voluptatibus molestias omnis reiciendis perspiciatis illum hic magni iste, velit aperiam quis.</p> -->
-              <p th:utext="${item.description}"></p>
-              <p><strong class="text-primary h4" th:text="${item.price}"></strong></p>
-              <div class="mb-1 d-flex">
-                <!--
-                <label for="option-sm" class="d-flex mr-3 mb-3">
-                  <span class="d-inline-block mr-2" style="top:-2px; position: relative;"><input type="radio" id="option-sm" name="shop-sizes"></span> <span class="d-inline-block text-black">Small</span>
-                </label>
-                <label for="option-md" class="d-flex mr-3 mb-3">
-                  <span class="d-inline-block mr-2" style="top:-2px; position: relative;"><input type="radio" id="option-md" name="shop-sizes"></span> <span class="d-inline-block text-black">Medium</span>
-                </label>
-                <label for="option-lg" class="d-flex mr-3 mb-3">
-                  <span class="d-inline-block mr-2" style="top:-2px; position: relative;"><input type="radio" id="option-lg" name="shop-sizes"></span> <span class="d-inline-block text-black">Large</span>
-                </label>
-                <label for="option-xl" class="d-flex mr-3 mb-3">
-                  <span class="d-inline-block mr-2" style="top:-2px; position: relative;"><input type="radio" id="option-xl" name="shop-sizes"></span> <span class="d-inline-block text-black"> Extra Large</span>
-                </label>-->
-              </div>
-
-              <div class="mb-5">
-                <div class="input-group mb-3" style="max-width: 120px;">
-                <div class="input-group-prepend">
-                  <button class="btn btn-outline-primary js-btn-minus" type="button">&minus;</button>
+        <div class="bg-light py-3">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12 mb-0"><a href="/main">Home</a> <span class="mx-2 mb-0">/</span> <strong class="text-black" th:text="${item.name}"></strong></div>
                 </div>
-                <input type="text" class="form-control text-center" value="1" placeholder="" name="quantity" id="quantity" aria-label="Example text with button addon" aria-describedby="button-addon1">
-                <div class="input-group-append">
-                  <button class="btn btn-outline-primary js-btn-plus" type="button">&plus;</button>
-                </div>
-              </div>
-
-              </div>
-
-                <input type="hidden" th:value="${item.id}" name="itemId" id="itemId">
-
-              <p><button class="buy-now btn btn-sm btn-primary" id="addCart" >Add To Cart</button></p>
-              <!--<p><a href="cart.html" class="buy-now btn btn-sm btn-primary">Add To Cart</a></p>-->
-
-
             </div>
-          </div>
         </div>
-      </div>
+
+        <div class="site-section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6">
+                        <img th:if="${#arrays.length(item.imageFiles) > 0}" th:src="'/items/images/'+ ${item.imageFiles[0].id}" alt="Image" class="img-fluid">
+                    </div>
+                    <div class="col-md-6">
+                        <h2 class="text-black" th:text="${item.name}"></h2>
+                        <p th:utext="${item.description}"></p>
+                        <p><strong class="text-primary h4" th:text="${item.price}"></strong></p>
+                        <div class="mb-1 d-flex col-md-4" style="margin-bottom: 1rem">
+
+                        </div>
+                        <div class="col-md-5" style="margin: 2rem 0;">
+                            <select class="form-control" id="phoneType" style="max-width: 150px">
+                                <option th:each="phoneType : ${phoneTypes}" th:value="${phoneType.name}" th:text="${phoneType.name}"></option>
+                            </select>
+                        </div>
+
+
+                        <div class="mb-5">
+                            <div class="input-group mb-3" style="max-width: 150px; padding: 0 15px;">
+                                <div class="input-group-prepend">
+                                    <button class="btn btn-outline-primary js-btn-minus" type="button">&minus;</button>
+                                </div>
+                                <input type="text" class="form-control text-center" value="1" placeholder="" name="quantity" id="quantity" aria-label="Example text with button addon" aria-describedby="button-addon1">
+                                <div class="input-group-append">
+                                    <button class="btn btn-outline-primary js-btn-plus" type="button">&plus;</button>
+                                </div>
+                            </div>
+
+                        </div>
+                        <input type="hidden" th:value="${item.id}" name="itemId" id="itemId">
+                        <p><button class="buy-now btn btn-sm btn-primary" id="addCart" >Add To Cart</button></p>
+
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-  </th:block>
+</th:block>
 
-  </body>
+</body>
 </html>

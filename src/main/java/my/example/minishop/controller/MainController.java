@@ -20,7 +20,7 @@ import java.util.List;
 public class MainController {
     private final ItemService itemService;
     private final CategoryService categoryService;
-    private final CartService cartService;
+
 
     @GetMapping("/")
     public String start(){
@@ -51,33 +51,6 @@ public class MainController {
     }
 
 
-    @GetMapping("/cart")
-    public String cart(Authentication authentication, Model model ){
-
-        List<Category> categories = categoryService.getCategoryAll();
-        model.addAttribute("categories", categories);
-
-
-        ShopSecurityUser user = (ShopSecurityUser)authentication.getPrincipal();
-        System.out.println("userid : "+user.getId());
-        List<Cart> carts = cartService.getCartByUser(user.getId());
-        model.addAttribute("carts", cartService.getCartByUser(user.getId()));
-
-        Long totalPrice = 0L;
-        for(Cart cart : carts)
-            totalPrice += cart.getItem().getPrice();
-
-        model.addAttribute("totalPrice", totalPrice);
-
-        //수정 필요 **
-        Category allCategory = new Category();
-        allCategory.setId(0L);
-        allCategory.setName("shop all");
-        model.addAttribute("selectedCategory", allCategory);
-
-
-        return "cart";
-    }
 //
 //    @GetMapping("search")
 //    public String search(@RequestParam(name = "searchStr") String searchStr,
