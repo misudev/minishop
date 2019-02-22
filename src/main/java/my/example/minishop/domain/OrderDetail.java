@@ -15,12 +15,14 @@ public class OrderDetail {
     private Long id;
     @Column
     private Long itemId;
-   // @Column
-   // private Long orderId;
+    @Column(name = "order_id")
+    private Long orderId;
     @Column
     private Long itemPrice;
     @Column(length = 255)
     private String itemName;
+    @Column
+    private String itemPhoneType;
     @Column
     private int orderQuantity;
 

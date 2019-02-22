@@ -1,19 +1,15 @@
 package my.example.minishop.controller;
 
 import lombok.RequiredArgsConstructor;
-import my.example.minishop.domain.Category;
-import my.example.minishop.domain.ImageFile;
-import my.example.minishop.domain.Item;
+import my.example.minishop.domain.*;
 import my.example.minishop.service.CategoryService;
 import my.example.minishop.service.ItemService;
+import my.example.minishop.service.PhoneTypeService;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.Assert;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -30,6 +26,7 @@ public class AdminController {
 
     private final ItemService itemService;
     private final CategoryService categoryService;
+    private final PhoneTypeService phoneTypeService;
 
     @GetMapping("")
     public String start(){
@@ -51,7 +48,6 @@ public class AdminController {
                          @RequestParam(name = "description") String description,
                          @RequestParam(name = "image") MultipartFile[] images){
 
-        System.out.println("상품 등록------------------");
         Assert.hasText(name, "제품명을 입력하세요.");
         Assert.notNull(price, "가격을 입력하세요");
         Assert.notNull(stock, "재고을 입력하세요");
@@ -86,7 +82,7 @@ public class AdminController {
 
         itemService.addItem(newItem, categoryId);
 
-        return "redirect:/main";
+        return "redirect:/admin";
     }
 
     private String saveFile(MultipartFile image) {
@@ -117,6 +113,29 @@ public class AdminController {
 
         return dir;
 
+    }
+
+    @GetMapping("/update")
+    public String updateItem(@RequestParam(name = "page", required = false, defaultValue = "1") int page,
+                             Model model){
+        List<Item> items = itemService.getItems(null, page, null, null);
+        model.addAttribute("items", items);
+        return "admin/update";
+    }
+
+    @PostMapping("/update")
+    public String updateItem(@RequestParam(name = "itemId")Long itemId){
+        return "redirect:/admin/updateform/"+itemId;
+    }
+
+    @GetMapping("/updateform/{id}")
+    public String updateItemForm(@PathVariable(name = "id") Long id, Model model){
+        Item item = itemService.getItemById(id);
+        List<PhoneType> phoneTypes = phoneTypeService.getAll();
+
+        model.addAttribute("item", item);
+        model.addAttribute("phoneTypes", phoneTypes);
+        return "admin/update_item";
     }
 
 }

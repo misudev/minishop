@@ -2,6 +2,7 @@ package my.example.minishop.config;
 
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -37,6 +38,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .logoutSuccessUrl("/main")
                     .permitAll().and()
                 .authorizeRequests() // 인가에 대한 설정
+                    //.antMatchers(HttpMethod.GET,"/api/cart").permitAll()
+                    .antMatchers("/api/cart").permitAll()
                     .antMatchers("/users/delete").permitAll()
                     .antMatchers("/users/join").permitAll()
                     .antMatchers("/users/welcome").permitAll()
@@ -56,6 +59,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .usernameParameter("email")
                     .passwordParameter("password")
                     .failureUrl("/users/login?fail=true")
-                    .defaultSuccessUrl("/main", true);
+                    .defaultSuccessUrl("/main", true).and().csrf().ignoringAntMatchers("/**");
+                    //api 사용시 csrf문제..
     }
 }

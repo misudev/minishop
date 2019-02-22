@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>Admin</title>
-    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/bootstrap.min.css" >
 </head>
 <body>
 
@@ -13,6 +13,10 @@
         <div class="card-body">
             <button type="button" class="btn btn-light"
                     style="margin-bottom: 1rem; display: block" onclick="location.href = '/admin/regist';">아이템 등록</button>
+
+            <button type="button" class="btn btn-light"
+                    style="margin-bottom: 1rem; display: block" onclick="location.href = '/admin/update';">아이템 목록&옵션추가</button>
+
 
             <button type="button" class="btn btn-light"
                     style="margin-bottom: 1rem; display: block"onclick="location.href = '/main';">메인 화면</button>

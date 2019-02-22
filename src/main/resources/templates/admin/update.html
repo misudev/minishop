@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+</head>
+<body>
+<div style="margin: 5% 10%">
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">카테고리</th>
+            <th scope="col">상품명</th>
+            <th scope="col">상품가격</th>
+            <th scope="col">옵션</th>
+            <th scope="col">수정</th>
+        </tr>
+        </thead>
+        <tbody>
+
+
+        <tr th:each=" item : ${items}">
+            <form action="/admin/update" method="post">
+            <input type="hidden" name="itemId" th:value="${item.id}">
+            <td th:text="${item.id}"></td>
+            <td th:text="${item.category.name}"></td>
+            <td th:text="${item.name}"></td>
+            <td th:text="${item.price}"></td>
+            <td>
+                <select class="form-control" >
+                <option th:each="itemOption : ${item.itemOptions}" th:value="${itemOption.name}"></option>
+                </select>
+            </td>
+            <td><button type="submit" class="btn btn-light">수정</button></td>
+            </form>
+        </tr>
+
+        </tbody>
+    </table>
+</div>
+<nav aria-label="Page navigation example">
+    <ul class="pagination justify-content-center">
+        <li class="page-item disabled">
+            <a class="page-link" href="#" tabindex="-1">Previous</a>
+        </li>
+        <li class="page-item"><a class="page-link" href="/admin/update/?page=1">1</a></li>
+        <li class="page-item"><a class="page-link" href="/admin/update/?page=2">2</a></li>
+        <li class="page-item"><a class="page-link" href="/admin/update/?page=3">3</a></li>
+        <li class="page-item">
+            <a class="page-link" href="#">Next</a>
+        </li>
+    </ul>
+</nav>
+
+</body>
+</html>

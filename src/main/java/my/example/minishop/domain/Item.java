@@ -32,9 +32,8 @@ public class Item {
     @JoinColumn(name = "category_id")
     private Category category;
 
-    @OneToMany
-    @JoinColumn(name ="item_option")
-    private List<ItemOption> itemOptions;
+//    @OneToMany(mappedBy = "item", cascade = CascadeType.ALL)
+//    private List<ItemOption> itemOptions;
 
     @OneToMany(mappedBy = "item",
             cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
@@ -42,7 +41,7 @@ public class Item {
 
     public Item(){
         regDate = new Date();
-        itemOptions = new ArrayList<>();
+        //itemOptions = new ArrayList<>();
     }
 
     public void addImageFile(ImageFile imageFile) {
@@ -51,5 +50,12 @@ public class Item {
         imageFile.setItem(this); // 쌍방향이기 때문에 this를 참조하도록 한다.
         imageFiles.add(imageFile);
     }
+
+//    public void addItemOption(ItemOption itemOption){
+//        if(itemOptions == null)
+//            itemOptions = new ArrayList<>();
+//        itemOption.setItem(this);
+//        itemOptions.add(itemOption);
+//    }
 
 }

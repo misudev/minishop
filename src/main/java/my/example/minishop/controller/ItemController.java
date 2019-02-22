@@ -4,9 +4,11 @@ import lombok.RequiredArgsConstructor;
 import my.example.minishop.domain.Category;
 import my.example.minishop.domain.ImageFile;
 import my.example.minishop.domain.Item;
+import my.example.minishop.domain.PhoneType;
 import my.example.minishop.service.CategoryService;
 import my.example.minishop.service.ImageFileService;
 import my.example.minishop.service.ItemService;
+import my.example.minishop.service.PhoneTypeService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,6 +29,7 @@ public class ItemController {
     private final ImageFileService imageFileService;
     private final ItemService itemService;
     private final CategoryService categoryService;
+    private final PhoneTypeService phoneTypeService;
 
     @GetMapping("/images/{id}")
     @ResponseBody
@@ -57,11 +60,19 @@ public class ItemController {
     public String itemDetail(@PathVariable(name = "id") Long id,
                            Model model
     ){
+
         Item item = itemService.getItemById(id);
         model.addAttribute("item", item);
 
         List<Category> categories = categoryService.getCategoryAll();
         model.addAttribute("categories", categories);
+
+        //수정 필요 **
+        Category allCategory = new Category();
+        allCategory.setId(0L);
+        allCategory.setName("shop all");
+        model.addAttribute("selectedCategory", allCategory);
+        model.addAttribute("phoneTypes", phoneTypeService.getAll());
 
         return "shop-single";
     }
